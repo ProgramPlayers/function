@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片切换</title>
+    <style>
+        /* 大盒子 */
+        
+        .banner {
+            /* 相对定位 */
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        /* 小圆点，左右按扭 */
+        
+        .radius,
+        .arrowhead-left,
+        .arrowhead-right {
+            display: none;
+        }
+        
+        .banner:hover .radius,
+        .banner:hover .arrowhead-left,
+        .banner:hover .arrowhead-right {
+            display: block;
+        }
+        /* 大盒子和图片的宽高 */
+        
+        .banner,
+        img {
+            width: 500px;
+            height: 333px;
+        }
+        
+        .radius {
+            /* 圆点所在的p (容器)  */
+            width: 100%;
+            height: 10px;
+            position: absolute;
+            bottom: 30px;
+            text-align: center;
+        }
+        /* 小圆点 */
+        
+        span {
+            margin: 0 2.5px;
+            display: inline-block;
+            border: 10px solid #fdfdfd;
+            border-radius: 50%;
+        }
+        /* 添加小圆样式 */
+        
+        .active {
+            border: 10px solid #656466;
+        }
+        /* 左右箭头  */
+        
+        .arrowhead-left,
+        .arrowhead-right {
+            top: 0;
+            position: absolute;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .3);
+        }
+        /* 左右按钮的和文字的宽度 */
+        
+        .arrowhead-left,
+        .arrowhead-right,
+        em {
+            width: 41px;
+        }
+        
+        .arrowhead-left,
+        .arrowhead-left em {
+            left: 0;
+        }
+        
+        .arrowhead-right,
+        .arrowhead-right em {
+            right: 0;
+        }
+        /* 按钮文字的样式 */
+        
+        em {
+            position: absolute;
+            display: inline-block;
+            font-size: 30px;
+            text-align: center;
+            color: #D6D8D4;
+            font-style: normal;
+            bottom: 50%;
+            margin-top: -20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <img src="./images/1.webp" alt="">
+        <!-- 小圆点点 -->
+        <p class="radius"></p>
+        <!-- 左右箭头 -->
+        <div class="arrowhead-left" id="al" onclick=""> <em>&lAarr;</em></div>
+        <div class="arrowhead-right" id="ar" onclick=""> <em>&rAarr;</em></div>
+    </div>
+    <script>
+        window.onload = function() {
+            var address = [
+                "./images/1.webp",
+                "./images/2.webp",
+                "./images/4.webp",
+                "./images/5.webp",
+                "./images/6.webp",
+                "./images/b01.jpg",
+                "./images/b02.jpg",
+                "./images/b03.jpg",
+                "./images/b04.jpg",
+                "./images/b05.jpg",
+                "./images/b06.jpg",
+                "./images/b07.jpg"
+            ];
+            var imgs = document.querySelector("img");
+            var len = address.length;
+            var str = "";
+            var pp = document.querySelector("p");
+            var al = document.getElementById("al");
+            var ar = document.getElementById("ar");
+            var n = 0;
+
+            //添加span标签（小圆点），个数为len个
+            for (i = 0; i < len; i++) {
+                str += '<span></span>'
+            }
+            pp.innerHTML = str;
+            var spans = pp.querySelectorAll("span")
+            spans[0].className = 'active'; //给第一个span标签添加样式 active
+
+            for (i = 0; i < len; i++) {
+                spans[i].index = i; //自定义索引值
+
+                spans[i].onclick = function() { //鼠标点击圆点时的事件
+                    for (i = 0; i < len; i++) {
+                        spans[i].className = ""; //通过循环，清除所有圆点的类名
+                    }
+                    n = this.index;
+                    this.className = 'active'; //给鼠标点击圆点添加类名
+                    imgs.src = address[n]
+                }
+
+            }
+            ar.onclick = function() { //右侧箭头，点击一次图片向右换一张
+                n++;
+                if (n > len - 1) {
+                    n = 0;
+                }
+                gYong()
+            }
+
+            al.onclick = function() { //左侧箭头，点击一次图片向左换一张
+                    n--;
+                    if (n < 0) {
+                        n = (len - 1);
+                    }
+                    gYong()
+                }
+                // 公共样式，打包成函数
+            function gYong() {
+                // 循环清除span所有样式
+                for (i = 0; i < len; i++) {
+                    spans[i].className = "";
+                }
+                // 再给指定的添加类名
+                spans[n].className = "active";
+                imgs.src = address[n];
+            }
+            gYong()
+                // 定时器
+            setInterval(ar.onclick, 3000);
+        }
+    </script>
+</body>
+
+</html>
