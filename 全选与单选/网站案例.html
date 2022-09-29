@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>单选和反选</title>
+</head>
+
+<body>
+    <form action="" method="post">
+        你爱好的运动是？<input type="checkbox" id="checkedAllBox" />全选/全不选<br />
+        <input type="checkbox" name="items" id="" value="足球" />足球
+        <input type="checkbox" name="items" id="" value="篮球" />篮球
+        <input type="checkbox" name="items" id="" value="羽毛球" />羽毛球
+        <input type="checkbox" name="items" id="" value="排球" />排球
+        <input type="checkbox" name="items" id="" value="乒乓球" />乒乓球
+        <input type="checkbox" name="items" id="" value="网球" />网球<br />
+        <input type="button" name="" id="checkedAllButton" value="全  选" />
+        <input type="button" name="" id="checkedNoButton" value="全不选" />
+        <input type="button" name="" id="checkedBackButton" value="反选" />
+        <input type="button" id="submin" value="提交" />
+    </form>
+</body>
+<script type="text/javascript">
+    //全选/全不选操作按钮：当它选中时，其余的也选中，当他取消其他的也取消
+    var checkedAllBox = document.getElementById('checkedAllBox');
+    //1:全选按钮
+    var quanxuan = document.getElementById('checkedAllButton');
+    quanxuan.onclick = function() {
+            var checkboxs = document.getElementsByName('items');
+            console.log(checkboxs.length);
+            for (var i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked = true;
+            }
+            checkedAllBox.checked = true;
+        }
+        //2:全不选按钮
+    var buquanxuan = document.getElementById('checkedNoButton');
+    buquanxuan.onclick = function() {
+            var checkboxs = document.getElementsByName('items');
+            console.log(checkboxs.length);
+            for (var i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked = false;
+            }
+            checkedAllBox.checked = false;
+        }
+        //3：反选按钮
+    var faxuan = document.getElementById("checkedBackButton");
+    faxuan.onclick = function() {
+        var checkboxs = document.getElementsByName('items');
+        checkedAllBox.checked = true;
+        for (var i = 0; i < checkboxs.length; i++) {
+            /* if (checkboxs[i].checked) {
+            	//证明多选框已选中，则设置为没选中状态
+            	checkboxs[i].checked = false
+            } else{
+            	checkboxs[i].checked = true
+            } */
+            //精简写法
+            checkboxs[i].checked = !checkboxs[i].checked;
+            //反选时也需要判断多个多选框是否选中
+            if (!checkboxs[i].checked) {
+                //一旦进入判断，则证明不是全选状态
+                //将checkedAllBox设置为没选中的状态
+                checkedAllBox.checked = false;
+                //一旦进入判断，则已得出结果，不用继续执行循环,使用break提升性能
+            }
+        }
+    }
+
+    //提交按钮，点击按钮以后将所有的按钮的内容都弹出
+    var submits = document.getElementById('submin');
+    submits.onclick = function() {
+        var checkboxs = document.getElementsByName('items');
+        console.log(checkboxs.length);
+        //遍历每一项
+        for (var i = 0; i < checkboxs.length; i++) {
+            if (checkboxs[i].checked) {
+                console.log(checkboxs[i].value)
+            }
+        }
+    }
+
+    //全选/全不选操作按钮：当它选中时，其余的也选中，当他取消其他的也取消
+    var checkedAllBox = document.getElementById('checkedAllBox');
+    checkedAllBox.onclick = function() {
+        var checkboxs = document.getElementsByName('items');
+        //设置多选框的选中状态
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = this.checked
+        }
+    }
+
+    //6:如果多选框都选中，则checkedAllBox也应该选中，如果没选中，则checkedAllBoxye不应该选中
+    var checkboxs = document.getElementsByName('items');
+    for (var i = 0; i < checkboxs.length; i++) {
+        checkboxs[i].onclick = function() {
+            //设置一个刚一点击checkedAllBox的时候，设置选中状态为默认的选中
+            checkedAllBox.checked = true;
+            for (let j = 0; j < checkboxs.length; j++) {
+                //判断四个多选是否都被选中
+                //只要有一个没选中则就不是全选
+                if (!checkboxs[j].checked) {
+                    //一旦进入判断，则证明不是全选状态
+                    //将checkedAllBox设置为没选中的状态
+                    checkedAllBox.checked = false;
+                    //一旦进入判断，则已得出结果，不用继续执行循环,使用break提升性能
+                    break;
+                }
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全选和单选</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        tbody {
+            width: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    </table>
+    <table border="" cellspacing="0" cellpadding="0">
+        <thead style="background-color: red;">
+            <tr>
+                <td><input type="checkbox" name="" id="qx"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox" name="gwc" id="" class="dx">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="gwc" id="" class="dx">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="gwc" id="" class="dx">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="gwc" id="" class="dx">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="gwc" id="" class="dx">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="gwc" id="" class="dx">
+                </td>
+            </tr>
+        </tbody>
+        <tfoot style="background-color: #000;">
+            <tr>
+                <td><input type="button" value="全选" id="qxbtn"></td>
+                <td><input type="button" value="全不选" id="qbxbtn"></td>
+                <td><input type="button" value="反选" id="fxbtn"></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+<script>
+    let qx = document.querySelector('#qx');
+    let ds = [...document.querySelectorAll('.dx')]
+    console.log(ds);
+    let qxbtn = document.querySelector('#qxbtn');
+    let qbxbtn = document.querySelector('#qbxbtn');
+    let fx = document.querySelector('#fxbtn')
+    qxbtn.onclick = () => {
+        for (const key in ds) {
+            ds[key].checked = true;
+        }
+        qx.checked = true;
+    }
+    qbxbtn.onclick = () => {
+        for (const key in ds) {
+            ds[key].checked = false
+        }
+        qx.checked = false;
+    }
+    qx.onclick = () => {
+        for (const key in ds) {
+            ds[key].checked = qx.checked
+        }
+    }
+    fx.onclick = () => {
+        qx.checked = true
+        for (const key in ds) {
+            ds[key].checked = !ds[key].checked
+            if (!ds[key].checked) {
+                qx.checked = false
+            }
+        }
+    }
+    for (const key in ds) {
+        ds[key].onclick = () => {
+            qx.checked = true;
+            for (const key in ds) {
+                if (!ds[key].checked) {
+                    qx.checked = false;
+                    break;
+                }
+            }
+        }
+    }
+</script>
+
+</html>
